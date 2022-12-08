@@ -1,28 +1,19 @@
 const mongoose = require("mongoose");
 
-const userSchema = mongoose.Schema({
-    firstName: {
+const taskSchema = mongoose.Schema({
+    title: {
         type: String,
         required: true
     },
-    lastName: {
+    description: {
+        type: String,
+        required: true
+    },
+    status: {
         type: String,
         required: true
     },
     email: {
-        type: String,
-        required: true,
-        unique: true
-    },
-    phone: {
-        type: Number,
-        required: true
-    },
-    image: {
-        type: String,
-        required: true
-    },
-    password: {
         type: String,
         required: true
     },
@@ -30,9 +21,9 @@ const userSchema = mongoose.Schema({
         type: Date,
         default: Date.now()
     }
-
+    
 }, { versionKey: false });
 
-const UserModel = mongoose.model("user", userSchema);
+const TaskModel = mongoose.model("tasklist", taskSchema);
 
-module.exports = UserModel;
+module.exports = TaskModel;
