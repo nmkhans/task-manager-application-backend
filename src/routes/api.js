@@ -6,7 +6,8 @@ const {
 } = require("../controllers/userController");
 const {
     createTask,
-    getTasks
+    getTasks,
+    updateTask
 } = require("../controllers/taskController");
 
 //? define router
@@ -32,5 +33,8 @@ router.post("/create-task", createTask);
 
 //? get all task api
 router.get("/get-tasks", getTasks);
+
+//? update a task api
+router.put("/update-task/:id", updateTask);
 
 module.exports = router;
