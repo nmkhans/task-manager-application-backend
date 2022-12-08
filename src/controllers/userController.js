@@ -21,7 +21,7 @@ const registerUser = async (req, res) => {
                 { email: data.email },
                 { password: 0 }
             );
-            
+
             res.status(200).json({
                 success: true,
                 message: "User registration successfull.",
@@ -44,6 +44,55 @@ const registerUser = async (req, res) => {
     }
 }
 
+//? login a user
+const loginUser = async (req, res) => {
+    try {
+        const data = req.body;
+        const existUser = await UserModel.findOne(
+            { email: data.email },
+            { email: 1, password: 1 }
+        );
+
+        if (existUser) {
+            const matchPassword = await bcrypt.compare(data.password, existUser.password);
+
+            if (matchPassword) {
+                const user = await UserModel.findOne(
+                    { email: data.email },
+                    { password: 0, createdDate: 0 }
+                );
+
+                res.status(200).json({
+                    success: true,
+                    message: "Login successfull.",
+                    data: user
+                })
+
+            } else {
+                res.status(500).json({
+                    success: false,
+                    message: "Incorrect password!"
+                })
+            }
+
+        } else {
+            res.status(500).json({
+                success: false,
+                message: "User not found!"
+            })
+        }
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Failed to login!",
+            error: error
+        })
+    }
+
+}
+
 module.exports = {
     registerUser,
+    loginUser
 }
