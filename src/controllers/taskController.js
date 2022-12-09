@@ -79,7 +79,7 @@ const updateTask = async (req, res) => {
     }
 }
 
-//?delete a task
+//? delete a task
 const deleteTask = async (req, res) => {
     try {
         const { id } = req.params;
@@ -100,9 +100,48 @@ const deleteTask = async (req, res) => {
     }
 }
 
+//? filter task by status
+const filterTask = async (req, res) => {
+    try {
+        const { status, email } = req.query;
+        const result = await TaskModel.aggregate([
+            { $match: { status: status, email: email } },
+            {
+                $project: {
+                    _id: 1,
+                    title: 1,
+                    description: 1,
+                    status: 1,
+                    email: 1,
+                    createdDate: {
+                        $dateToString: {
+                            date: "$createdDate",
+                            format: "%d-%m-%Y"
+                        }
+                    }
+                }
+            }
+        ]);
+
+        res.status(200).json({
+            success: true,
+            message: "All filtered task fetched.",
+            data: result
+        })
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "There was a server side problem!",
+            data: error
+        })
+    }
+}
+
 module.exports = {
     createTask,
     getTasks,
     updateTask,
-    deleteTask
+    deleteTask,
+    filterTask
 }
