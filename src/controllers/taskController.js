@@ -138,10 +138,46 @@ const filterTask = async (req, res) => {
     }
 }
 
+//? count task
+const countTask = async (req, res) => {
+    try {
+        const { email } = req.query;
+        const data = await TaskModel.aggregate([
+            {
+                $match: {
+                    email: email
+                }
+            },
+            {
+                $group: {
+                    _id: "$status",
+                    sum: {
+                        $count: {}
+                    }
+                }
+            }
+        ]);
+
+        res.status(200).json({
+            success: true,
+            message: "Task count data.",
+            data: data
+        })
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "There was a server side error!",
+            error: error
+        })
+    }
+}
+
 module.exports = {
     createTask,
     getTasks,
     updateTask,
     deleteTask,
-    filterTask
+    filterTask,
+    countTask
 }

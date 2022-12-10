@@ -9,7 +9,8 @@ const {
     getTasks,
     updateTask,
     deleteTask,
-    filterTask
+    filterTask,
+    countTask
 } = require("../controllers/taskController");
 
 //? define router
@@ -44,5 +45,8 @@ router.delete("/delete-task/:id", deleteTask)
 
 //? filter task api
 router.get("/filter-task", filterTask)
+
+//? count task api
+router.get("/count-task", countTask)
 
 module.exports = router;
