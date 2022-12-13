@@ -12,6 +12,8 @@ const {
     filterTask,
     countTask
 } = require("../controllers/taskController");
+const uploadImage = require("../controllers/imageController");
+const upload = require("../middlewares/imageUpload");
 
 //? define router
 const router = Router();
@@ -28,6 +30,9 @@ router.post("/register-user", registerUser);
 
 //? user login api
 router.post("/login-user", loginUser);
+
+//? user image upload api
+router.post("/image-upload", upload.single("image"), uploadImage);
 
 //todo: Task Management Api
 

@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 require("dotenv").config();
 const router = require("./src/routes/api");
 const cors = require("cors");
@@ -8,6 +9,7 @@ const mongoose = require("mongoose");
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use("/public", express.static(path.join(__dirname, "/public")));
 
 //? database connection
 const uri = process.env.DATABASE_URI;
