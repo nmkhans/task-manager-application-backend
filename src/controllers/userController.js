@@ -40,7 +40,7 @@ const registerUser = async (req, res) => {
         res.status(500).json({
             success: false,
             message: "User registration failed!",
-            error: error
+            data: error
         })
     }
 }
