@@ -14,6 +14,7 @@ const {
 } = require("../controllers/taskController");
 const uploadImage = require("../controllers/imageController");
 const upload = require("../middlewares/imageUpload");
+const verifyUser = require("../middlewares/verifyUser");
 
 //? define router
 const router = Router();
@@ -40,7 +41,7 @@ router.post("/image-upload", upload.single("image"), uploadImage);
 router.post("/create-task", createTask);
 
 //? get all task api
-router.get("/get-tasks", getTasks);
+router.get("/get-tasks", verifyUser, getTasks);
 
 //? update a task api
 router.put("/update-task/:id", updateTask);
