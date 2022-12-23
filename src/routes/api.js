@@ -44,10 +44,10 @@ router.post("/create-task", verifyUser, createTask);
 router.get("/get-tasks", verifyUser, getTasks);
 
 //? update a task api
-router.put("/update-task/:id", updateTask);
+router.put("/update-task/:id", verifyUser, updateTask);
 
 //? delete a task api
-router.delete("/delete-task/:id", deleteTask)
+router.delete("/delete-task/:id", verifyUser, deleteTask)
 
 //? filter task api
 router.get("/filter-task", verifyUser, filterTask)
