@@ -106,6 +106,7 @@ const filterTask = async (req, res) => {
         const { status, email } = req.query;
         const result = await TaskModel.aggregate([
             { $match: { status: status, email: email } },
+            {$sort: {createdDate: -1}},
             {
                 $project: {
                     _id: 1,
