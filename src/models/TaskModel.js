@@ -11,7 +11,8 @@ const taskSchema = mongoose.Schema({
     },
     status: {
         type: String,
-        required: true
+        required: true,
+        default: "new"
     },
     email: {
         type: String,

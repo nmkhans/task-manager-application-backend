@@ -38,7 +38,7 @@ router.post("/image-upload", upload.single("image"), uploadImage);
 //todo: Task Management Api
 
 //? create task api
-router.post("/create-task", createTask);
+router.post("/create-task", verifyUser, createTask);
 
 //? get all task api
 router.get("/get-tasks", verifyUser, getTasks);
@@ -50,9 +50,9 @@ router.put("/update-task/:id", updateTask);
 router.delete("/delete-task/:id", deleteTask)
 
 //? filter task api
-router.get("/filter-task", filterTask)
+router.get("/filter-task", verifyUser, filterTask)
 
 //? count task api
-router.get("/count-task", countTask)
+router.get("/count-task", verifyUser, countTask)
 
 module.exports = router;
