@@ -15,6 +15,7 @@ const {
 const uploadImage = require("../controllers/imageController");
 const upload = require("../middlewares/imageUpload");
 const verifyUser = require("../middlewares/verifyUser");
+const { generateOTP, verifyOTP, resetPassword } = require("../controllers/OTPController");
 
 //? define router
 const router = Router();
@@ -54,5 +55,16 @@ router.get("/filter-task", verifyUser, filterTask)
 
 //? count task api
 router.get("/count-task", verifyUser, countTask)
+
+//todo: OTP code api
+
+//? generate otp code api
+router.get("/generate-otp", generateOTP);
+
+//? verify otp code api
+router.post("/verify-otp", verifyOTP);
+
+//? reset password api
+router.put("/reset-password", resetPassword)
 
 module.exports = router;
