@@ -2,7 +2,9 @@ const { Router } = require("express");
 const defaultController = require("../controllers/defaultController");
 const {
     registerUser,
-    loginUser
+    loginUser,
+    getUsers,
+    deleteUser
 } = require("../controllers/userController");
 const {
     createTask,
@@ -66,5 +68,13 @@ router.post("/verify-otp", verifyOTP);
 
 //? reset password api
 router.put("/reset-password", resetPassword)
+
+//todo: Dashboard management
+
+//? get all users api
+router.get("/get-users", getUsers);
+
+//? delete a user
+router.delete("/delete-user/:id", deleteUser)
 
 module.exports = router;

@@ -99,7 +99,50 @@ const loginUser = async (req, res) => {
 
 }
 
+//? get all user
+const getUsers = async (req, res) => {
+    try {
+        const users = await UserModel.find();
+
+        res.status(200).json({
+            success: true,
+            message: "All users data",
+            data: users
+        })
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "There was a server side error!",
+            error: error
+        })
+    }
+}
+
+//? delete a user
+const deleteUser = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const result = await UserModel.deleteOne({ _id: id })
+        
+        res.status(200).json({
+            success: true,
+            message: "User successfully deleted.",
+            data: result
+        })
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Failed to delete user!",
+            error: error
+        })
+    }
+}
+
 module.exports = {
     registerUser,
-    loginUser
+    loginUser,
+    getUsers,
+    deleteUser
 }
