@@ -109,7 +109,6 @@ const getUsers = async (req, res) => {
                 }
             }
         ]);
-        console.log(users)
 
         res.status(200).json({
             success: true,
