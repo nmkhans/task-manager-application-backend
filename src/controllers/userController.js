@@ -102,7 +102,14 @@ const loginUser = async (req, res) => {
 //? get all user
 const getUsers = async (req, res) => {
     try {
-        const users = await UserModel.find();
+        const users = await UserModel.aggregate([
+            {
+                $project: {
+                    password: 0
+                }
+            }
+        ]);
+        console.log(users)
 
         res.status(200).json({
             success: true,
@@ -124,7 +131,7 @@ const deleteUser = async (req, res) => {
     try {
         const { id } = req.params;
         const result = await UserModel.deleteOne({ _id: id })
-        
+
         res.status(200).json({
             success: true,
             message: "User successfully deleted.",
