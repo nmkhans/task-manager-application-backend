@@ -40,12 +40,11 @@ const generateOTP = async (req, res) => {
             }
 
             await transporter.sendMail(mail);
-
-            res.cookie("OTP", otp, { expires: now, httpOnly: true });
-            res.cookie("email", email, { expires: now, httpOnly: true });
+            
             return res.status(200).json({
                 success: true,
-                message: "otp send"
+                message: "otp send",
+                data: {otp, email}
             })
 
         } else {
@@ -68,11 +67,11 @@ const generateOTP = async (req, res) => {
 const verifyOTP = async (req, res) => {
     try {
         const { email } = req.query;
-        const { otp } = req.body;
+        const { code } = req.body;
 
         const matchOTP = await OTPModel.findOne({
             email: email,
-            OTP: otp
+            OTP: code
         })
 
         if (matchOTP) {
@@ -82,9 +81,6 @@ const verifyOTP = async (req, res) => {
                 { upsert: true }
             );
 
-            const now = new Date();
-            now.setTime(now.getTime() + (1000 * 60));
-            res.cookie("OTP", matchOTP.OTP, { expires: now, httpOnly: true })
             return res.status(200).json({
                 success: true,
                 message: "OTP Verified."

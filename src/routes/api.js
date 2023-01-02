@@ -59,7 +59,7 @@ router.get("/count-task", verifyUser, countTask)
 //todo: OTP code api
 
 //? generate otp code api
-router.get("/generate-otp", generateOTP);
+router.post("/generate-otp", generateOTP);
 
 //? verify otp code api
 router.post("/verify-otp", verifyOTP);
